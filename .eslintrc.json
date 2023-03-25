@@ -5,7 +5,15 @@
     "es2021": true
   },
   "extends": ["airbnb-base", "prettier"],
-  "overrides": [],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "rules": {
+        "prefer-const": "off",
+        "no-plusplus": "off"
+      }
+    }
+  ],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
