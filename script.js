@@ -7,20 +7,53 @@ function Book(title, author, pageCount, read) {
   this.read = read;
 }
 
+Book.prototype.toggleRead = function () {
+  this.read = !this.read;
+};
+
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
+
+function removeBookFromLibrary(bookIndex) {
+  myLibrary.splice(bookIndex, 1);
+}
+
+function generateRemoveButton(index) {}
 
 function generateLibrary() {
   const oldTbody = document.querySelector("#book-table tbody");
   const newTbody = document.createElement("tbody");
 
-  myLibrary.forEach((book) => {
+  myLibrary.forEach((book, index) => {
+    const removeBtn = document.createElement("button");
+    removeBtn.setAttribute("data", index);
+    removeBtn.textContent = "remove";
+
+    removeBtn.addEventListener("click", (event) => {
+      const eventTarget = event.target;
+      removeBookFromLibrary(eventTarget.getAttribute("data"));
+      generateLibrary();
+    });
+
+    const readBtn = document.createElement("button");
+    readBtn.setAttribute("data", index);
+    readBtn.textContent = "read";
+
+    readBtn.addEventListener("click", (event) => {
+      const eventTarget = event.target;
+      const idx = eventTarget.getAttribute("data");
+      myLibrary[idx].toggleRead();
+      generateLibrary();
+    });
+
     const row = newTbody.insertRow();
     row.insertCell().innerHTML = book.title;
     row.insertCell().innerHTML = book.author;
     row.insertCell().innerHTML = book.pageCount;
     row.insertCell().innerHTML = book.read ? "Yes" : "No";
+    row.insertCell().appendChild(readBtn);
+    row.insertCell().appendChild(removeBtn);
   });
 
   oldTbody.parentNode.replaceChild(newTbody, oldTbody);
@@ -29,15 +62,15 @@ function generateLibrary() {
 function toggleAddBookPrompt() {
   const overlayElement = document.querySelector(".overlay");
 
-  if (overlayElement.style.display === "none") {
-    overlayElement.style.display = "flex";
-  } else {
+  if (overlayElement.style.display === "flex") {
     overlayElement.style.display = "none";
+  } else {
+    overlayElement.style.display = "flex";
   }
 }
 
-for (let i = 0; i < 1; i++) {
-  addBookToLibrary(new Book("dummyTitle", "dummyAuthor", 200, true));
+for (let i = 0; i < 10; i++) {
+  addBookToLibrary(new Book(`dummyTitle ${i}`, "dummyAuthor", 200, true));
 }
 generateLibrary();
 
