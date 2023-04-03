@@ -1,15 +1,19 @@
 let myLibrary = [];
 
-function Book(title, author, pageCount, read) {
-  this.title = title;
-  this.author = author;
-  this.pageCount = pageCount;
-  this.read = read;
-}
+class Book {
+  read;
 
-Book.prototype.toggleRead = function () {
-  this.read = !this.read;
-};
+  constructor(title, author, pageCount, read) {
+    this.title = title;
+    this.author = author;
+    this.pageCount = pageCount;
+    this.read = read;
+  }
+
+  toggleRead = () => {
+    this.read = !this.read;
+  };
+}
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -18,8 +22,6 @@ function addBookToLibrary(book) {
 function removeBookFromLibrary(bookIndex) {
   myLibrary.splice(bookIndex, 1);
 }
-
-function generateRemoveButton(index) {}
 
 function generateLibrary() {
   const oldTbody = document.querySelector("#book-table tbody");
