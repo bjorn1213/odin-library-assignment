@@ -14,16 +14,16 @@
         <h1>Add book</h1>
         <form action="" id="form-add-book">
           <label for="bookTitle">Title</label>
-          <input type="text" name="bookTitle" id="bookTitle" />
+          <input required type="text" name="bookTitle" id="bookTitle" />
 
           <label for="bookAuthor">Author</label>
-          <input type="text" name="bookAuthor" id="bookAuthor" />
+          <input required type="text" name="bookAuthor" id="bookAuthor" />
 
           <label for="pageCount">Pagecount</label>
           <input
+            required
             type="number"
             min="1"
-            value="1"
             name="pageCount"
             id="pageCount"
           />

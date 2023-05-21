@@ -82,18 +82,44 @@ addButton.addEventListener("click", () => {
   toggleAddBookPrompt();
 });
 
+function showError() {
+  const titleInput = document.querySelector("#bookTitle");
+  const authorInput = document.querySelector("#bookAuthor");
+  const pagesInput = document.querySelector("#pageCount");
+
+  titleInput.setCustomValidity("");
+  authorInput.setCustomValidity("");
+  pagesInput.setCustomValidity("");
+
+  if (titleInput.validity.valueMissing) {
+    titleInput.setCustomValidity("Required field!");
+  }
+  if (authorInput.validity.valueMissing) {
+    authorInput.setCustomValidity("Required field!");
+  }
+  if (pagesInput.validity.valueMissing) {
+    pagesInput.setCustomValidity("Required field!");
+  } else if (pagesInput.validity.rangeUnderflow) {
+    pagesInput.setCustomValidity("At least 1 page must be present!");
+  }
+}
+
 const confirmAddBook = document.querySelector("#add-book");
 confirmAddBook.addEventListener("click", (event) => {
-  event.preventDefault();
+  const form = document.querySelector("form");
+  if (form.checkValidity()) {
+    const bookTitle = document.getElementById("bookTitle").value;
+    const bookAuthor = document.getElementById("bookAuthor").value;
+    const pageCount = document.getElementById("pageCount").value;
+    const read = document.getElementById("read").value;
 
-  const bookTitle = document.getElementById("bookTitle").value;
-  const bookAuthor = document.getElementById("bookAuthor").value;
-  const pageCount = document.getElementById("pageCount").value;
-  const read = document.getElementById("read").value;
+    addBookToLibrary(new Book(bookTitle, bookAuthor, pageCount, read));
+    generateLibrary();
 
-  addBookToLibrary(new Book(bookTitle, bookAuthor, pageCount, read));
-  generateLibrary();
-
-  toggleAddBookPrompt();
-  document.getElementById("form-add-book").reset();
+    toggleAddBookPrompt();
+    document.getElementById("form-add-book").reset();
+  } else {
+    showError();
+  }
+  // event.preventDefault();
 });
