@@ -105,7 +105,7 @@ function showError() {
 }
 
 const confirmAddBook = document.querySelector("#add-book");
-confirmAddBook.addEventListener("click", (event) => {
+confirmAddBook.addEventListener("click", () => {
   const form = document.querySelector("form");
   if (form.checkValidity()) {
     const bookTitle = document.getElementById("bookTitle").value;
@@ -121,5 +121,4 @@ confirmAddBook.addEventListener("click", (event) => {
   } else {
     showError();
   }
-  // event.preventDefault();
 });
